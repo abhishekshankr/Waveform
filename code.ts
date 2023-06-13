@@ -1,8 +1,8 @@
-figma.showUI(__html__, {width: 240, height: 200});
+figma.showUI(__html__, {width: 250, height: 350});
 
 figma.ui.onmessage = msg => {
     if (msg.type === 'create-bars') {
-        const { strokeSize, gap } = msg;
+        const { strokeSize, gap, alignment, minHeightFactor, maxHeightFactor, strokeCap } = msg;
         const nodes = figma.currentPage.selection;
 
         if (nodes.length !== 1 || nodes[0].type !== "FRAME") {
@@ -16,7 +16,7 @@ figma.ui.onmessage = msg => {
             child.remove();
         }
 
-        const bars = generateRandomBars(strokeSize, gap, frame);
+        const bars = generateRandomBars(strokeSize, gap, frame, alignment, minHeightFactor, maxHeightFactor, strokeCap);
 
         bars.forEach(bar => frame.appendChild(bar));
 
@@ -24,22 +24,27 @@ figma.ui.onmessage = msg => {
     }
 };
 
-function generateRandomBars(strokeSize: number, gap: number, frame: FrameNode): LineNode[] {
+function generateRandomBars(strokeSize: number, gap: number, frame: FrameNode, alignment: string, minHeightFactor: number, maxHeightFactor: number, strokeCap: string): LineNode[] {
     const bars: LineNode[] = [];
-    const minHeight = 0.1 * frame.height; // Adjust this value to change the lower limit
-    const heightRange = 0.9 * frame.height; // Adjust the range based on the minimum height
+    console.log(minHeightFactor);
+    console.log(maxHeightFactor);
+    const minHeight = minHeightFactor * frame.height; // Adjust this value to change the lower limit
+    const heightRange = (maxHeightFactor - minHeightFactor) * frame.height; // Adjust the range based on the minimum height
+    const heightOffset = frame.height / 2;
 
-    for (let xPos = 0; xPos < frame.width; xPos += strokeSize + gap) {
+    for (let xPos = strokeSize + gap; xPos < frame.width; xPos += strokeSize + gap) {
         // Random height between minHeight and (minHeight + heightRange)
         const barHeight = minHeight + Math.random() * heightRange;
+        const yPos = alignment === "center" ? heightOffset + barHeight / 2 : frame.height;
 
         const bar = figma.createLine();
         bar.resize(barHeight, 0);
         bar.x = xPos;
-        bar.y = frame.height;
+        bar.y = yPos;
         bar.rotation = 90;
-        bar.strokes = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }}];
+        bar.strokes = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 } }];
         bar.strokeWeight = strokeSize;
+        bar.strokeCap = strokeCap === "ROUND" ? "ROUND" : "SQUARE";
 
         bars.push(bar);
     }

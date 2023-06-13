@@ -1,25 +1,117 @@
-
+<!DOCTYPE html>
 <html>
+<head>
+    <style>
+        body {
+            font-family: Inter, sans-serif;
+            padding: 20px;
+            font-size: 12px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button[type="button"] {
+            border: 2px solid #000;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        .selected {
+            background-color: #007BFF;
+            color: #fff;
+        }
+    </style>
+</head>
 <body>
   <form id="pluginForm">
     <label for="strokeSize">Stroke Size:</label>
-    <input type="number" id="strokeSize" name="strokeSize" required><br>
+    <input type="number" id="strokeSize" name="strokeSize" min="0" value="5"><br>
 
     <label for="gap">Gap:</label>
-    <input type="number" id="gap" name="gap" required><br>
+    <input type="number" id="gap" name="gap" min="0" value="5"><br>
+
+    <label for="minHeight">Min Height:</label>
+    <input type="number" id="minHeight" name="minHeight" min="0" max="0.5" step="0.1" value="0.2"><br>
+
+    <label for="maxHeight">Max Height:</label>
+    <input type="number" id="maxHeight" name="maxHeight" min="0.5" max="1" step="0.1" value="0.8"><br>
+
+    <label for="strokeCap">Stroke Cap:</label><br>
+    <button type="button" id="capRound" class="selected">Round</button>
+    <button type="button" id="capSquare">Square</button><br>
+
+    <!-- SVG Icons for Alignment -->
+    <label for="alignment">Alignment:</label><br>
+    <button type="button" id="alignBottom" class="selected">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 12L9 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M15 24L15 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M21 16L21 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M27 28L27 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M33 14L33 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M39 16L39 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        </svg>        
+    </button>
+    <button type="button" id="alignCenter">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 12L9 36" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M15 18L15 30" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M21 14L21 34" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M27 20L27 28" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M33 13L33 35" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        <path d="M39 14L39 34" stroke="black" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+    </button><br>
 
     <input type="submit" value="Create Sound Bars">
   </form>
 
   <script>
+    let alignment = "bottom";
+    let strokeCap = "ROUND";
+
+    document.getElementById('alignBottom').addEventListener('click', switchAlignment);
+    document.getElementById('alignCenter').addEventListener('click', switchAlignment);
+    document.getElementById('capRound').addEventListener('click', switchCap);
+    document.getElementById('capSquare').addEventListener('click', switchCap);
+
     document.getElementById('pluginForm').addEventListener('submit', (event) => {
       event.preventDefault();
 
       const strokeSize = parseInt(document.getElementById('strokeSize').value, 10);
       const gap = parseInt(document.getElementById('gap').value, 10);
+      const minHeightFactor = parseFloat(document.getElementById('minHeight').value);
+      const maxHeightFactor = parseFloat(document.getElementById('maxHeight').value);
 
-      parent.postMessage({ pluginMessage: { type: 'create-bars', strokeSize, gap } }, '*');
+      parent.postMessage({ pluginMessage: { type: 'create-bars', strokeSize, gap, alignment, minHeightFactor, maxHeightFactor, strokeCap } }, '*');
     });
+
+    function switchAlignment(event) {
+      alignment = event.target.id === "alignBottom" ? "bottom" : "center";
+
+      document.getElementById('alignBottom').classList.remove("selected");
+      document.getElementById('alignCenter').classList.remove("selected");
+
+      event.target.classList.add("selected");
+    }
+
+    function switchCap(event) {
+      strokeCap = event.target.id === "capRound" ? "ROUND" : "SQUARE";
+
+      document.getElementById('capRound').classList.remove("selected");
+      document.getElementById('capSquare').classList.remove("selected");
+
+      event.target.classList.add("selected");
+    }
   </script>
 </body>
 </html>
