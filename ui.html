@@ -3,7 +3,6 @@
 
 <head>
   <style>
-    /* Variables */
     :root {
       --primary-color: #007BFF;
       --text-color: #333;
@@ -43,18 +42,14 @@
 
     input[type="number"]:focus {
       outline: none;
-      /* Remove the default browser outline */
       border: 1px solid var(--primary-color);
-      /* Set the border color to blue */
       box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-      /* Optional: Add a blue glow for a more pronounced focus effect */
     }
 
     input[type="submit"] {
       width: 100%;
       border: none;
       padding: 12px var(--spacing-large);
-      /*margin: var(--spacing-small) 0;*/
       cursor: pointer;
       border-radius: var(--border-radius);
       background-color: var(--primary-color);
@@ -80,7 +75,6 @@
       color: var(--text-color);
     }
 
-
     button[type="button"]:hover {
       background-color: darken(var(--primary-color), 10%);
     }
@@ -89,15 +83,9 @@
       background-color: #0051a8;
     }
 
-
-
-
-    /* SVG Button Styles */
     button[type="button"] svg path {
       stroke: var(--svg-color);
-      /* Default stroke color */
-      transition: stroke 0.2s;
-      /* Smooth transition for stroke color change */
+
     }
 
     button[type="button"].selected {
@@ -110,11 +98,8 @@
       stroke: var(--primary-color);
     }
 
-
-    /* Ensuring SVG fills the button and doesn't capture click events */
     button[type="button"] svg {
       pointer-events: none;
-      /* SVG won't capture click events */
     }
 
     .flex-container {
@@ -122,14 +107,7 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      /*border-bottom: 1px solid var(--border-color);*/
-      /*padding-bottom: var(--spacing-medium);*/
       margin-bottom: var(--spacing-small);
-    }
-
-    .flex-container:last-child {
-      border-bottom: none;
-      /* Remove border for the last flex-container */
     }
 
     .flex-item {
@@ -139,7 +117,6 @@
 
     .flex-item:last-child {
       margin-right: 0;
-      /* Remove margin for the last flex-item */
     }
 
     button[type="button"]:not(:last-child) {
@@ -156,8 +133,11 @@
 
 <body>
   <form id="pluginForm">
+
     <h3>Properties</h3>
+
     <!-- Stroke Size & Gap in one flex container -->
+
     <div class="flex-container">
       <div class="flex-item">
         <label for="strokeSize">Stroke Size</label>
@@ -168,7 +148,9 @@
         <input type="number" id="gap" name="gap" min="0" value="5">
       </div>
     </div>
+
     <!-- Min Height & Max Height in another flex container -->
+
     <div class="flex-container">
       <div class="flex-item">
         <label for="minHeight">Min Height</label>
@@ -182,9 +164,9 @@
 
     <h3>Appearance</h3>
     <!-- Stroke Cap buttons in a flex container -->
+
     <label for="strokeCap">Stroke Cap</label>
     <div class="flex-container">
-
       <div class="flex-item">
         <button type="button" id="capRound" class="selected">Round</button>
         <button type="button" id="capSquare">Square</button>
@@ -192,9 +174,9 @@
     </div>
 
     <!-- SVG Icons for Alignment -->
+
     <label for="alignment">Alignment</label>
     <div class="flex-container">
-
       <div class="flex-item">
         <!-- SVG Buttons for Alignment -->
         <button type="button" id="alignBottom" class="selected">
@@ -221,6 +203,7 @@
     </div>
 
     <input type="submit" value="Create Waveform">
+
   </form>
 
   <script>
