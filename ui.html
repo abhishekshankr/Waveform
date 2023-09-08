@@ -19,55 +19,17 @@
 
     body {
       font-family: Inter, sans-serif;
-      padding: var(--spacing-medium);
+      padding: var(--spacing-small);
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 400;
       color: var(--text-color);
       background-color: var(--background-color);
       line-height: 1.5;
     }
 
-    input[type="submit"] {
-      width: 100%;
-      border: none;
-      padding: var(--spacing-small) var(--spacing-medium);
-      margin: var(--spacing-small) 0;
-      cursor: pointer;
-      border-radius: var(--border-radius);
-      background-color: var(--primary-color);
-      color: var(--white-color);
+    h3 {
       font-size: 12px;
-      transition: background-color 0.3s;
-    }
-
-    button[type="button"] {
-      width: 45%;
-      margin-right: 11px;
-      border: none;
-      padding: var(--spacing-small) var(--spacing-medium);
-      /*margin: var(--spacing-small) 0;*/
-      cursor: pointer;
-      border-radius: var(--border-radius);
-      background-color: var(--primary-color);
-      color: var(--white-color);
-      font-size: 12px;
-      transition: background-color 0.3s;
-    }
-
-    input[type="submit"]:hover,
-    button[type="button"]:hover {
-      background-color: darken(var(--primary-color), 10%);
-    }
-
-    button[type="button"] {
-      border: 1px solid var(--border-color);
-      background-color: var(--white-color);
-      color: var(--text-color);
-    }
-
-    .selected {
-      background-color: var(--primary-color);
-      color: var(--white-color);
+      font-family: 'Inter';
     }
 
     input[type="number"] {
@@ -79,6 +41,56 @@
       border-radius: var(--border-radius);
     }
 
+    input[type="number"]:focus {
+      outline: none;
+      /* Remove the default browser outline */
+      border: 1px solid var(--primary-color);
+      /* Set the border color to blue */
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      /* Optional: Add a blue glow for a more pronounced focus effect */
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      border: none;
+      padding: 12px var(--spacing-large);
+      /*margin: var(--spacing-small) 0;*/
+      cursor: pointer;
+      border-radius: var(--border-radius);
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      font-size: 12px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    button[type="button"] {
+      width: 45%;
+      border: none;
+      padding: var(--spacing-small) var(--spacing-medium);
+      margin: var(--spacing-small) 0;
+      cursor: pointer;
+      border-radius: var(--border-radius);
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      font-size: 12px;
+      transition: background-color 0.3s;
+      border: 1px solid var(--border-color);
+      background-color: var(--white-color);
+      color: var(--text-color);
+    }
+
+
+    button[type="button"]:hover {
+      background-color: darken(var(--primary-color), 10%);
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0051a8;
+    }
+
+
+
 
     /* SVG Button Styles */
     button[type="button"] svg path {
@@ -89,26 +101,25 @@
     }
 
     button[type="button"].selected {
-      background-color: var(--primary-color);
-      color: var(--white-color);
+      background-color: #5cabff48;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
     }
 
     button[type="button"].selected svg path {
-      stroke: var(--white-color);
-      /* SVG stroke color when button is selected */
+      stroke: var(--primary-color);
     }
 
 
     /* Ensuring SVG fills the button and doesn't capture click events */
     button[type="button"] svg {
-      width: 100%;
-      height: 100%;
       pointer-events: none;
       /* SVG won't capture click events */
     }
 
     .flex-container {
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       /*border-bottom: 1px solid var(--border-color);*/
@@ -130,11 +141,22 @@
       margin-right: 0;
       /* Remove margin for the last flex-item */
     }
+
+    button[type="button"]:not(:last-child) {
+      margin-right: var(--spacing-medium);
+    }
+
+    .flex-container:nth-child(3) {
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: var(--spacing-small);
+      margin-bottom: var(--spacing-medium);
+    }
   </style>
 </head>
 
 <body>
   <form id="pluginForm">
+    <h3>Properties</h3>
     <!-- Stroke Size & Gap in one flex container -->
     <div class="flex-container">
       <div class="flex-item">
@@ -146,7 +168,6 @@
         <input type="number" id="gap" name="gap" min="0" value="5">
       </div>
     </div>
-
     <!-- Min Height & Max Height in another flex container -->
     <div class="flex-container">
       <div class="flex-item">
@@ -159,6 +180,7 @@
       </div>
     </div>
 
+    <h3>Appearance</h3>
     <!-- Stroke Cap buttons in a flex container -->
     <label for="strokeCap">Stroke Cap</label>
     <div class="flex-container">
@@ -176,23 +198,23 @@
       <div class="flex-item">
         <!-- SVG Buttons for Alignment -->
         <button type="button" id="alignBottom" class="selected">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 12L9 36" stroke-width="4" stroke-linecap="round" />
-            <path d="M15 24L15 36" stroke-width="4" stroke-linecap="round" />
-            <path d="M21 16L21 36" stroke-width="4" stroke-linecap="round" />
-            <path d="M27 28L27 36" stroke-width="4" stroke-linecap="round" />
-            <path d="M33 14L33 36" stroke-width="4" stroke-linecap="round" />
-            <path d="M39 16L39 36" stroke-width="4" stroke-linecap="round" />
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="cap-style" d="M9 12L9 36" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M15 24L15 36" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M21 16L21 36" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M27 28L27 36" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M33 14L33 36" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M39 16L39 36" stroke-width="4" stroke-linecap="round" />
           </svg>
         </button>
         <button type="button" id="alignCenter">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 12L9 36" stroke-width="4" stroke-linecap="round" />
-            <path d="M15 18L15 30" stroke-width="4" stroke-linecap="round" />
-            <path d="M21 14L21 34" stroke-width="4" stroke-linecap="round" />
-            <path d="M27 20L27 28" stroke-width="4" stroke-linecap="round" />
-            <path d="M33 13L33 35" stroke-width="4" stroke-linecap="round" />
-            <path d="M39 14L39 34" stroke-width="4" stroke-linecap="round" />
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="cap-style" d="M9 12L9 36" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M15 18L15 30" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M21 14L21 34" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M27 20L27 28" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M33 13L33 35" stroke-width="4" stroke-linecap="round" />
+            <path class="cap-style" d="M39 14L39 34" stroke-width="4" stroke-linecap="round" />
           </svg>
         </button>
       </div>
@@ -237,6 +259,12 @@
       document.getElementById('capSquare').classList.remove("selected");
 
       event.target.classList.add("selected");
+
+      // Update SVG paths
+      const paths = document.querySelectorAll('.cap-style');
+      paths.forEach(path => {
+        path.setAttribute('stroke-linecap', strokeCap);
+      });
     }
   </script>
 </body>
