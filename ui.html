@@ -1,133 +1,202 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <style>
-/* Variables */
-:root {
-    --primary-color: #007BFF;
-    --text-color: #333;
-    --svg-color: #404040;
-    --border-color: #e4e4e4;
-    --background-color: #f5f5f5;
-    --white-color: #fff;
-    --border-radius: 4px;
-    --spacing-small: 8px;
-    --spacing-medium: 16px;
-    --spacing-large: 24px;
-}
+  <style>
+    /* Variables */
+    :root {
+      --primary-color: #007BFF;
+      --text-color: #333;
+      --svg-color: #404040;
+      --border-color: #e4e4e4;
+      --background-color: #f5f5f5;
+      --white-color: #fff;
+      --border-radius: 4px;
+      --spacing-small: 8px;
+      --spacing-medium: 16px;
+      --spacing-large: 24px;
+    }
 
-body {
-    font-family: Inter, sans-serif;
-    padding: var(--spacing-medium);
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    line-height: 1.5;
-}
+    body {
+      font-family: Inter, sans-serif;
+      padding: var(--spacing-medium);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      line-height: 1.5;
+    }
 
-input[type="submit"], button[type="button"] {  
-  border: none;
-    padding: var(--spacing-small) var(--spacing-medium);
-    margin: var(--spacing-small) 0;
-    cursor: pointer;
-    border-radius: var(--border-radius);
-    background-color: var(--primary-color);
-    color: var(--white-color);
-    font-size: 12px;
-    transition: background-color 0.3s;
-}
+    input[type="submit"] {
+      width: 100%;
+      border: none;
+      padding: var(--spacing-small) var(--spacing-medium);
+      margin: var(--spacing-small) 0;
+      cursor: pointer;
+      border-radius: var(--border-radius);
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      font-size: 12px;
+      transition: background-color 0.3s;
+    }
 
-input[type="submit"]:hover, button[type="button"]:hover {
-    background-color: darken(var(--primary-color), 10%);
-}
+    button[type="button"] {
+      width: 45%;
+      margin-right: 11px;
+      border: none;
+      padding: var(--spacing-small) var(--spacing-medium);
+      /*margin: var(--spacing-small) 0;*/
+      cursor: pointer;
+      border-radius: var(--border-radius);
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      font-size: 12px;
+      transition: background-color 0.3s;
+    }
 
-button[type="button"] {
-    border: 1px solid var(--border-color);
-    background-color: var(--white-color);
-    color: var(--text-color);
-}
+    input[type="submit"]:hover,
+    button[type="button"]:hover {
+      background-color: darken(var(--primary-color), 10%);
+    }
 
-.selected {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-}
+    button[type="button"] {
+      border: 1px solid var(--border-color);
+      background-color: var(--white-color);
+      color: var(--text-color);
+    }
 
-input[type="number"] {
-    width: 100%;
-    font-size: 12px;
-    padding: var(--spacing-small);
-    margin-bottom: var(--spacing-medium);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-}
+    .selected {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
 
-
-/* SVG Button Styles */
-button[type="button"] svg path {
-    stroke: var(--svg-color);  /* Default stroke color */
-    transition: stroke 0.2s;  /* Smooth transition for stroke color change */
-}
-
-button[type="button"].selected {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-}
-
-button[type="button"].selected svg path {
-    stroke: var(--white-color);  /* SVG stroke color when button is selected */
-}
+    input[type="number"] {
+      width: 100%;
+      font-size: 12px;
+      padding: var(--spacing-small);
+      margin-bottom: var(--spacing-medium);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+    }
 
 
-/* Ensuring SVG fills the button and doesn't capture click events */
-button[type="button"] svg {
-    width: 100%;
-    height: 100%;
-    pointer-events: none;  /* SVG won't capture click events */
-}
+    /* SVG Button Styles */
+    button[type="button"] svg path {
+      stroke: var(--svg-color);
+      /* Default stroke color */
+      transition: stroke 0.2s;
+      /* Smooth transition for stroke color change */
+    }
 
-</style>
+    button[type="button"].selected {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+
+    button[type="button"].selected svg path {
+      stroke: var(--white-color);
+      /* SVG stroke color when button is selected */
+    }
+
+
+    /* Ensuring SVG fills the button and doesn't capture click events */
+    button[type="button"] svg {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      /* SVG won't capture click events */
+    }
+
+    .flex-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /*border-bottom: 1px solid var(--border-color);*/
+      /*padding-bottom: var(--spacing-medium);*/
+      margin-bottom: var(--spacing-small);
+    }
+
+    .flex-container:last-child {
+      border-bottom: none;
+      /* Remove border for the last flex-container */
+    }
+
+    .flex-item {
+      flex: 1;
+      margin-right: var(--spacing-medium);
+    }
+
+    .flex-item:last-child {
+      margin-right: 0;
+      /* Remove margin for the last flex-item */
+    }
+  </style>
 </head>
+
 <body>
   <form id="pluginForm">
-    <label for="strokeSize">Stroke Size</label>
-    <input type="number" id="strokeSize" name="strokeSize" min="0" value="5"><br>
+    <!-- Stroke Size & Gap in one flex container -->
+    <div class="flex-container">
+      <div class="flex-item">
+        <label for="strokeSize">Stroke Size</label>
+        <input type="number" id="strokeSize" name="strokeSize" min="0" value="5">
+      </div>
+      <div class="flex-item">
+        <label for="gap">Gap</label>
+        <input type="number" id="gap" name="gap" min="0" value="5">
+      </div>
+    </div>
 
-    <label for="gap">Gap</label>
-    <input type="number" id="gap" name="gap" min="0" value="5"><br>
+    <!-- Min Height & Max Height in another flex container -->
+    <div class="flex-container">
+      <div class="flex-item">
+        <label for="minHeight">Min Height</label>
+        <input type="number" id="minHeight" name="minHeight" min="0" max="0.5" step="0.1" value="0.2">
+      </div>
+      <div class="flex-item">
+        <label for="maxHeight">Max Height</label>
+        <input type="number" id="maxHeight" name="maxHeight" min="0.5" max="1" step="0.1" value="0.8">
+      </div>
+    </div>
 
-    <label for="minHeight">Min Height</label>
-    <input type="number" id="minHeight" name="minHeight" min="0" max="0.5" step="0.1" value="0.2"><br>
+    <!-- Stroke Cap buttons in a flex container -->
+    <label for="strokeCap">Stroke Cap</label>
+    <div class="flex-container">
 
-    <label for="maxHeight">Max Height</label>
-    <input type="number" id="maxHeight" name="maxHeight" min="0.5" max="1" step="0.1" value="0.8"><br>
-
-    <label for="strokeCap">Stroke Cap</label><br>
-    <button type="button" id="capRound" class="selected">Round</button>
-    <button type="button" id="capSquare">Square</button><br>
+      <div class="flex-item">
+        <button type="button" id="capRound" class="selected">Round</button>
+        <button type="button" id="capSquare">Square</button>
+      </div>
+    </div>
 
     <!-- SVG Icons for Alignment -->
-    <label for="alignment">Alignment</label><br>
-    <button type="button" id="alignBottom" class="selected">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 12L9 36" stroke-width="4" stroke-linecap="round"/>
-        <path d="M15 24L15 36" stroke-width="4" stroke-linecap="round"/>
-        <path d="M21 16L21 36" stroke-width="4" stroke-linecap="round"/>
-        <path d="M27 28L27 36" stroke-width="4" stroke-linecap="round"/>
-        <path d="M33 14L33 36" stroke-width="4" stroke-linecap="round"/>
-        <path d="M39 16L39 36" stroke-width="4" stroke-linecap="round"/>
-        </svg>        
-    </button>
-    <button type="button" id="alignCenter">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 12L9 36" stroke-width="4" stroke-linecap="round"/>
-        <path d="M15 18L15 30" stroke-width="4" stroke-linecap="round"/>
-        <path d="M21 14L21 34" stroke-width="4" stroke-linecap="round"/>
-        <path d="M27 20L27 28" stroke-width="4" stroke-linecap="round"/>
-        <path d="M33 13L33 35" stroke-width="4" stroke-linecap="round"/>
-        <path d="M39 14L39 34" stroke-width="4" stroke-linecap="round"/>
-        </svg>
-    </button><br>
+    <label for="alignment">Alignment</label>
+    <div class="flex-container">
+
+      <div class="flex-item">
+        <!-- SVG Buttons for Alignment -->
+        <button type="button" id="alignBottom" class="selected">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12L9 36" stroke-width="4" stroke-linecap="round" />
+            <path d="M15 24L15 36" stroke-width="4" stroke-linecap="round" />
+            <path d="M21 16L21 36" stroke-width="4" stroke-linecap="round" />
+            <path d="M27 28L27 36" stroke-width="4" stroke-linecap="round" />
+            <path d="M33 14L33 36" stroke-width="4" stroke-linecap="round" />
+            <path d="M39 16L39 36" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button type="button" id="alignCenter">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12L9 36" stroke-width="4" stroke-linecap="round" />
+            <path d="M15 18L15 30" stroke-width="4" stroke-linecap="round" />
+            <path d="M21 14L21 34" stroke-width="4" stroke-linecap="round" />
+            <path d="M27 20L27 28" stroke-width="4" stroke-linecap="round" />
+            <path d="M33 13L33 35" stroke-width="4" stroke-linecap="round" />
+            <path d="M39 14L39 34" stroke-width="4" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
 
     <input type="submit" value="Create Sound Bars">
   </form>
@@ -171,4 +240,5 @@ button[type="button"] svg {
     }
   </script>
 </body>
+
 </html>
