@@ -1,28 +1,39 @@
-figma.showUI(__html__, {width: 300, height: 400});
+figma.showUI(__html__, {width: 250, height: 470});
 
 figma.ui.onmessage = msg => {
     if (msg.type === 'create-bars') {
         const { strokeSize, gap, alignment, minHeightFactor, maxHeightFactor, strokeCap } = msg;
         const nodes = figma.currentPage.selection;
 
-        if (nodes.length !== 1 || nodes[0].type !== "FRAME") {
-            figma.notify('Please select a single frame!');
+        // Check if no nodes are selected
+        if (nodes.length === 0) {
+            figma.notify('Please select at least one frame!');
             return;
         }
 
-        const frame = nodes[0] as FrameNode;
-        // clear the frame each time
-        for (const child of frame.children) {
-            child.remove();
-        }
+        nodes.forEach(node => {
+            // Check if the node is a frame
+            if (node.type !== "FRAME") {
+                figma.notify('All selections should be frames!');
+                return;
+            }
 
-        const bars = generateRandomBars(strokeSize, gap, frame, alignment, minHeightFactor, maxHeightFactor, strokeCap);
+            const frame = node as FrameNode;
+            
+            // Clear the frame each time
+            for (const child of frame.children) {
+                child.remove();
+            }
 
-        bars.forEach(bar => frame.appendChild(bar));
+            const bars = generateRandomBars(strokeSize, gap, frame, alignment, minHeightFactor, maxHeightFactor, strokeCap);
+
+            bars.forEach(bar => frame.appendChild(bar));
+        });
 
         figma.notify('Sound bar visualization created!');
     }
 };
+
 
 function generateRandomBars(strokeSize: number, gap: number, frame: FrameNode, alignment: string, minHeightFactor: number, maxHeightFactor: number, strokeCap: string): LineNode[] {
     const bars: LineNode[] = [];
